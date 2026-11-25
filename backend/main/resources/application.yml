@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: polyglotmesh-backend
+  config:
+    # Loads backend/.env (KEY=VALUE lines) when it exists. Real environment variables still win.
+    import: optional:file:./.env[.properties]
+  jackson:
+    default-property-inclusion: always
+
+server:
+  port: ${SERVER_PORT:8080}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+logging:
+  level:
+    root: INFO
+    com.polyglotmesh: ${LOG_LEVEL:INFO}
+
+polyglotmesh:
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173}
+  sandbox:
+    timeout-ms: ${SANDBOX_TIMEOUT_MS:5000}
+    max-code-length: ${SANDBOX_MAX_CODE_LENGTH:20000}
+    max-output-bytes: ${SANDBOX_MAX_OUTPUT_BYTES:65536}
+    statement-limit: ${SANDBOX_STATEMENT_LIMIT:20000000}
+    max-concurrent-executions: ${SANDBOX_MAX_CONCURRENT:4}
+    allowed-languages: ${SANDBOX_ALLOWED_LANGUAGES:python,javascript}
+  compare:
+    default-iterations: ${COMPARE_DEFAULT_ITERATIONS:5}
+    max-iterations: ${COMPARE_MAX_ITERATIONS:25}
